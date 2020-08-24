@@ -1,0 +1,109 @@
+<!--  -->
+<ion-header [translucent]="false" >
+  <ion-toolbar>
+    <ion-title>
+      每日記錄
+    </ion-title>
+    
+  </ion-toolbar>
+
+  <ion-card scroll-hide [scrollContent]="pageContent" [minHeight]="175" [triggerDistance]="90">
+    <ion-card-content>
+      <ion-grid class="ion-text-center">
+        <ion-row><ion-col>每日達成事項</ion-col></ion-row>
+        <ion-row>
+          <ion-col *ngFor="let item of dailyGoalList | searchFilter : 'group' : 0" class="dailyGoalCol" [ngClass]="{'goal': item.goal}">
+            {{item.text}}
+          </ion-col>
+          <!-- <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data1'])}">每日心情</ion-col>
+          <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data2'])}">起床時間</ion-col>
+          <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data3'])}">睡眠時間</ion-col> -->
+        </ion-row>
+        <ion-row style="margin-top: 1vh;">
+          <ion-col *ngFor="let item of dailyGoalList | searchFilter : 'group' : 1" class="dailyGoalCol" [ngClass]="{'goal': item.goal}">
+            {{item.text}}
+          </ion-col>
+          <!-- <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data0'])}">每日情緒標記</ion-col>
+          <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data4'])}">DASS量表</ion-col>
+          <ion-col class="dailyGoalCol" [ngClass]="{'goal': getFabBtnColor(['data5'])}">ASMR量表</ion-col> -->
+        </ion-row>
+        <hr>
+        <ion-row class="ion-text-left">
+          <ion-col>
+            <ion-note>
+              說明:<span style="padding:5px" class="dailyGoalCol goal">已達成目標</span>
+              <span style="padding:5px" class="dailyGoalCol ">未達到目標</span>
+            </ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-header>
+<!--  -->
+<ion-content [fullscreen]="true" [scrollEvents]="true" #pageContent>
+  <ion-card *ngFor="let dailyRecord of dailyRecordList">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-grid>
+          <ion-row >
+            <ion-col class="ion-text-end">
+              <ion-note style="font-size: 4vw;color:var(--ion-color-dark-tint);border-bottom: 1px solid var(--ion-color-dark-tint);">
+              {{dailyRecord.Datetime}}
+            </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row style="padding-top: 3vw;">
+            <ion-col>
+              <ion-label class="ion-text-wrap">
+                <ion-text color="primary">
+                  <h2>{{dailyRecord.write}}</h2>
+                </ion-text>
+              </ion-label>
+            </ion-col>
+            <ion-col size="3" *ngIf="dailyRecord.type === '1' || dailyRecord.type === '3'">
+              <ion-icon (click)="playMedia(dailyRecord.write)" name="play-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-icon slot="start" style="zoom:1.7" *ngIf="dailyRecord.type === '0'" src="assets/icon/text.svg"></ion-icon>
+        <ion-icon slot="start" style="zoom:1.7" *ngIf="dailyRecord.type === '1'" src="assets/icon/mic.svg"></ion-icon>
+        <ion-icon slot="start" style="zoom:1.7" *ngIf="dailyRecord.type === '2'" src="assets/icon/emotion-3.svg"></ion-icon>
+        <ion-icon slot="start" style="zoom:1.7" *ngIf="dailyRecord.type === '3'" src="assets/icon/video.svg"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!-- empty row to prevent fab cover last card content -->
+  <ion-item line="none"></ion-item>
+  <!-- fab item -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top" *ngIf="showFab">
+      <ion-fab-button color="tertiary" data-desc="每日心情與睡眠" (click)="showModal(0, 5)">
+        <ion-icon src="assets/icon/sleep.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="文字" (click)="showModal(1, 0)">
+        <ion-icon src="assets/icon/text.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="錄音" (click)="showModal(1, 1)">
+        <ion-icon src="assets/icon/mic.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="錄影" (click)="showModal(1, 3)">
+        <ion-icon src="assets/icon/video.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="情緒" (click)="showModal(1, 2)">
+        <ion-icon src="assets/icon/emotion-3.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="DASS-21量表" (click)="showModal(2,1)">
+        <ion-icon src="assets/icon/evaluation.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary" data-desc="ASRM量表" (click)="showModal(2,2)">
+        <ion-icon src="assets/icon/evaluation.svg" style="zoom:1.5;"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+</ion-content>

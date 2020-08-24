@@ -1,0 +1,56 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-title >
+      其他
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  <ion-card *ngIf="false">
+    <ion-card-content  (click)="showGoogleForm('DASS')">
+      <ion-item lines="none" class="ion-text-center">
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h1>DASS-21量表(每週)</h1>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="false">
+    <ion-card-content (click)="showGoogleForm('ASRM')">
+      <ion-item lines="none" class="ion-text-center">
+        <ion-label class="ion-text-wrap" >
+          <ion-text color="primary">
+            <h1>ASRM量表(每週)</h1>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content (click)="showPointRedeem()">
+      <ion-item lines="none" class="ion-text-center" >
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h1>POINT兌換</h1>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-item lines="none" (click)="logout()">
+        <ion-label class="ion-text-wrap" class="ion-text-center">
+          <ion-text color="primary">
+            <h1>登出</h1>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

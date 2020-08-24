@@ -1,0 +1,16 @@
+.invalidLabel {
+    // border: 1px solid #ea6153;
+    
+    color: #ea6153;
+    font-weight: bolder;
+}
+.invalid div::before {
+    content: '*';
+    color: #ea6153;
+}
+
+.invalid div{
+    font-size: 4vw;
+    color: #ea6153;
+    font-weight: bolder;
+}

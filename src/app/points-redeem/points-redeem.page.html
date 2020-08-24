@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab4">離開</ion-back-button>
+    </ion-buttons>
+    <ion-title>點數兌換</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <hr>
+      <ion-item lines="none" >
+        <ion-icon style="zoom:2" class="goal" src="assets/icon/money-bag.svg"></ion-icon>
+          <ion-text color="primary" style="padding-left:2vw">
+            <h1 >Point點數為: {{points}} </h1> 
+          </ion-text>        
+      </ion-item>
+      <hr>
+      <ion-item lines="none">
+        <!-- [disabled]="points < 100" -->
+        <ion-button slot="start" size="large" (click)="pointsExchange(0)" >兌換一張</ion-button>
+        <ion-button slot="end" size="large" (click)="pointsExchange(1)">兌換全部</ion-button>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-button color="secondary" style="width: 100%;" size="large" (click)="showExchangeHistory()">兌換記錄</ion-button>
+      </ion-item>
+      <ion-item-divider></ion-item-divider>
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h4>每100點Point可以兌換100元7-11禮券，於回診時與曾鈺晴小姐兌換，可使用Line先連絡哦。</h4>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons> -->
+    <ion-title >
+      Point 點數
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <hr>
+  <!-- 每日達成 -->
+  <ion-card *ngFor="let reward of rewardObject">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h2>{{reward.title}}</h2>
+          </ion-text>
+        </ion-label>
+        <ion-icon slot="start" [ngClass]="{'goal': reward.goal}" src="assets/icon/target.svg"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <hr>
+  <!-- 成就系統 -->
+  <ion-card *ngFor="let award of awardObject">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h2>{{award.title}}</h2>
+          </ion-text>
+          <ion-text color="secondary">
+            <p>points: {{award.points}}</p>
+          </ion-text>
+        </ion-label>
+        <ion-icon slot="start" [ngClass]="{'goal': award.goal}" *ngIf="award.id === 'TOT1'" src="assets/icon/money-bag.svg"></ion-icon>
+        <ion-icon slot="start" [ngClass]="{'goal': award.goal}" *ngIf="award.id != 'TOT1'" src="assets/icon/money-coin.svg"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <hr>
+</ion-content>

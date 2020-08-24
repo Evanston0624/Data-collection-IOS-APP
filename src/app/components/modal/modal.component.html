@@ -1,0 +1,119 @@
+<!--  -->
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismiss()">關閉</ion-button>
+    </ion-buttons>
+    <ion-title >
+      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- 每日情緒及睡眠 -->
+    <ion-card-content *ngIf="emotionType === 0">
+      <ion-item class="ion-text-center" style="align-items: center;">
+        <img src="assets/icon/bd.png" width="100%" alt=""><br>
+      </ion-item>
+      <ion-item class="ion-text-center" style="align-items: center;">
+        <ion-range color="danger" style="display: inline-block!important;padding-top: 0px;" ticks="true" min="0" max="6" [value]="eventObject.score" (ionChange)="rangeChange(0,$event)" snaps pin="true">
+          <!-- <ion-label slot="start">{{item.title}}</ion-label> -->
+          <ion-label slot="end"></ion-label>
+        </ion-range>
+      </ion-item>
+     
+      <ion-item lines="full" >
+        <ion-button style="width:100%" expand="block" size="default" color="secondary" (click)="submitData(0)">送出每日情緒</ion-button>
+      </ion-item>
+
+      <ion-item style="margin-top: 10px">
+        <ion-segment (ionChange)="segmentChanged($event)" value="5"> 
+          <ion-segment-button value="5">
+            <ion-icon src="assets/icon/sunrise.svg" style="zoom:2"></ion-icon>
+            <ion-label>起床</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="8">
+            <ion-icon src="assets/icon/moon.svg" style="zoom:2"></ion-icon>
+            <ion-label>睡眠</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+      <ion-item>
+        <ion-label position="start">日期</ion-label>
+        <!-- [pickerOptions]="datePickerOptions" -->
+        <ion-datetime #datePicker [pickerOptions]="datePickerOptions"  displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="start">時間</ion-label>
+        <ion-datetime #timePicker [pickerOptions]="timePickerOptions" cancelable="false"  displayFormat="HH:mm" pickerFormat="HH:mm" ></ion-datetime>
+      </ion-item>
+      <ion-item line="full">
+        <ion-button style="width:100%" expand="block" size="default" color="secondary" (click)="submitData(1)">送出時間</ion-button>
+      </ion-item>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="emotionType === 1">
+      <!-- 文字 -->
+      <ion-item lines="full" *ngIf="dataType===0" style="padding-bottom: 3vw;">
+        <ion-label position="floating">請撰寫文字</ion-label>
+        <ion-textarea type="text" #inputTextArea></ion-textarea>
+      </ion-item>
+      <!-- 錄音 -->
+      <!-- <ion-item lines="full" class="ion-text-center" style="align-items: center;padding-bottom: 3vw;" *ngIf="dataType===1"> -->
+        <!-- <ion-label position="floating"></ion-label> -->
+      <ng-container *ngIf="dataType===1">
+        <ion-row class="ion-text-center" style="align-items: center;padding-bottom: 3vw;" >
+          <ion-col >
+            點擊麥克風 敘述近期狀況
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center" style="border-bottom: 1px solid lightgray;">
+          <ion-col (click)="recordAudio()">
+            <ion-icon src="assets/icon/mic.svg" style="zoom:5;"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <!-- {{eventObject.audio}} -->
+        <!-- {{message}} -->
+      </ng-container>
+      
+      
+        
+      <!-- </ion-item> -->
+      <!-- 錄影 -->
+      <!-- <ion-item lines="full" class="ion-text-center" style="align-items: center;padding-bottom: 3vw;" *ngIf="dataType===3"> -->
+        <!-- <ion-label position="floating"></ion-label> -->
+      <ng-container *ngIf="dataType===3">
+        <ion-row class="ion-text-center" style="align-items: center;padding-bottom: 3vw;">
+          <ion-col >
+            點擊錄影 紀錄視訊
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center" style="border-bottom: 1px solid lightgray;">
+          <ion-col (click)="recordVideo()">
+            <ion-icon src="assets/icon/video.svg" style="zoom:5;"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <!-- {{eventObject.video}} -->
+        <!-- {{message}} -->
+      </ng-container>
+      
+        
+      <!-- </ion-item> -->
+      
+      <!-- 情緒 -->
+      <ion-item lines="full" *ngFor="let item of eventObject.emoji" >
+        <ion-range color="danger" ticks="true" min="0" max="3" [value]="item.value" (ionChange)="rangeChange(item.id,$event)" snaps pin="true">
+          <ion-label slot="start">{{item.title}}</ion-label>
+          <ion-label slot="end">{{item.value}}</ion-label>
+        </ion-range>
+        <ion-icon [src]="item.icon" style="zoom:1.5" slot="start"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>  
+</ion-content>
+<ion-footer *ngIf="emotionType === 1">
+  <ion-button expand="full" color="secondary" (click)="submitData(2)">送出</ion-button>
+</ion-footer>

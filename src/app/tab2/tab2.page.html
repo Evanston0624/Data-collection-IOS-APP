@@ -1,0 +1,45 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons> -->
+    <ion-title >
+      使用者回饋
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      每日情緒
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvasType1></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      睡眠時間
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvasType2></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      起床時間
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvasType3></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      GPS
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvasType4></canvas>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

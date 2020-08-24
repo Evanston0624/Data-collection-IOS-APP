@@ -1,0 +1,13 @@
+
+ion-tab-button > ion-icon{
+  opacity: 0.6 !important;
+}
+
+ion-tab-button[aria-selected=true] {
+  background-color: var(--background-focused);
+  border-bottom: 3px solid var(--ion-color-success-shade);
+}
+
+ion-tab-button[aria-selected=true] > ion-icon{
+  opacity: 1 !important;
+}

@@ -1,0 +1,62 @@
+// user data-desc for fab button and desc
+ion-fab-button[data-desc] {
+  position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+  position: absolute;
+  content: attr(data-desc);
+  z-index: 1;
+  right: 12vw;
+  background-color: var(--ion-color-primary);
+  bottom: 0vw;
+  padding: 9px;
+  border-radius: 10px;
+  color: white; 
+  // box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+}
+
+.dailyGoalCol{
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  color:white;
+  background-color: var(--ion-color-medium);
+}
+
+.dailyGoalCol.goal{
+  background-color: var(--ion-color-tertiary);
+}
+
+// ion-fab-button[color="medium"]::after {
+//   background-color: var(--ion-color-medium) !important;
+// }
+
+ion-card{
+  margin: 5px 10px 10px 10px;
+}
+
+ion-card-content{
+  padding: 0;
+}
+
+ion-icon[slot="start"]{
+  margin-inline-end: 7px !important;
+  margin-right: 7px !important;
+}
+
+shrinking-segment-header {
+
+  background-color: #363636;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+      border-radius: 50%;
+      width: 75px;
+      height: auto;
+      margin-right: 15px;
+  }
+
+}

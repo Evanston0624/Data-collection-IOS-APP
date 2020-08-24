@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="container" [formGroup]="loginForm" (ngSubmit)="login()" >
+    <ion-grid class="ion-padding">
+      <ion-row color="primary" class="ion-text-center">
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div>
+            <h3>NCKU<br>MoodSensor</h3>
+          </div>
+          <div class="ion-padding">
+            <ion-item>
+              <ion-label position="floating">帳號</ion-label>
+              <ion-input name="account" type="text" formControlName="account"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">密碼</ion-label>
+              <ion-input name="password" type="password" formControlName="password"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <!-- <ion-label position="floating"></ion-label> -->
+              <ion-checkbox color="primary" slot="start" formControlName="rememberme"></ion-checkbox>記住我
+              <!-- <ion-input name="rememberme" type="check" formControlName="rememberme"></ion-input> -->
+            </ion-item>
+          </div>
+          <div class="ion-padding">
+            <ion-button size="large" type="submit" [disabled]="loginForm.invalid" expand="block">登入
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div class="ion-text-center" style="width:100%">
+          還沒有帳號嗎?? <a [routerLink]="['/reg']">註冊新帳號</a> 
+        </div>
+      </ion-row>
+    </ion-grid>
+    <div class="ion-padding" *ngIf="false">
+      <ion-button size="large" type="button" (click)="startGPS()"  expand="block">Start GPS</ion-button>
+    </div>
+    <div class="ion-padding" *ngIf="false">
+      <ion-button size="large" type="button" (click)="stopGPS()"  expand="block">Stop GPS</ion-button>
+    </div>
+  </form>
+  <!-- <p>{{locationStatus|json}}</p>-->
+  <!-- <p>{{geolocationStatus|json}}</p>  -->
+  <ul *ngIf="false">
+    <!-- <li *ngFor="let location of locationList?.slice().reverse()">{{location|json}}</li> -->
+    <li *ngFor="let location of sendLocationList?.slice().reverse()">{{location|json}}</li>
+  </ul>
+</ion-content>
+<ion-footer style="background-color: white;">
+  <ion-grid class="ion-text-center">
+    <!-- <ion-row>
+      <ion-col>GPS</ion-col>權限<ion-col></ion-col><ion-col>網路</ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col style="background-color: var(--ion-color-danger-shade);" [ngClass]="{'available': locationStatus.Enabled}">
+        GPS
+      </ion-col>
+      <ion-col style="background-color: var(--ion-color-danger-shade);" [ngClass]="{'available': locationStatus.Available}">
+        GPS權限
+      </ion-col>
+      <ion-col style="background-color: var(--ion-color-danger-shade);" [ngClass]="{'available': networkStatus}">
+        網路
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

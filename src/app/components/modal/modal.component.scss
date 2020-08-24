@@ -1,0 +1,61 @@
+//PICKER
+.picker-wrapper {
+    background: var(--ion-color-primary) !important; // colors the highlight
+    // --border-width: 1px 0 0;
+    --border-width: 0;
+    --border-color: var(--ion-inactive-on-red, var(--ion-inactive-on-red, var(--ion-inactive-on-red, #ffb3b3)));
+}
+
+// Picker Toolbar and Buttons
+
+.picker-toolbar {
+    background: var(--ion-color-primary-shade) !important; //buttons
+    border-bottom: none !important;
+}
+
+.picker-button {
+    border: 0;
+    font-family: inherit;
+    color: var(--ion-color-light) !important;
+}
+
+.picker-button {
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+// Picker Column
+
+.picker-col {
+    display: flex;
+    position: relative;
+    flex: 1;
+    justify-content: center;
+    height: 100%;
+    box-sizing: content-box;
+    contain: content;
+}
+
+.picker-opts {
+    position: relative;
+    flex: 1;
+    max-width: 100%;
+    .picker-opt {
+        font-size: 30px;
+        color: #FFFFFF !important;
+    }
+}
+
+.picker-above-highlight {
+    border-bottom: 1px solid var(--ion-color-dark);
+    background: linear-gradient( to bottom, var(--ion-color-dark) 20%, var(--ion-color-primary) 100%) !important;
+    opacity: 0.6;
+}
+
+.picker-below-highlight {
+    border-top: 1px solid var(--ion-color-dark);
+    background: linear-gradient( to top, var(--ion-color-dark) 30%, var(--ion-color-primary) 100%) !important;
+    opacity: 0.6;
+}
