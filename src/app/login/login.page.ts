@@ -1,5 +1,5 @@
 
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -24,7 +24,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   user = { Account: '', Password: '' };
   loginForm: FormGroup;
   locationList = [];
@@ -53,9 +53,7 @@ export class LoginPage implements OnInit {
         '',
         [Validators.required, Validators.minLength(4)]
       ],
-      rememberme: [
-
-      ]
+      rememberme: [false]
     });
     this.platform.ready().then(() => {
       // 取得 location enabled, permission and network status
@@ -80,7 +78,11 @@ export class LoginPage implements OnInit {
           .subscribe({
             next: (account) => {
               console.log(account);
-              this.loginForm.controls.account = account;
+              if (account == null || account === '') { }
+              else {
+                this.loginForm.controls.account.setValue(account);
+                this.loginForm.controls.rememberme.setValue(true);
+              }
             },
             error: (err) => console.log(err)
           });
@@ -178,8 +180,8 @@ export class LoginPage implements OnInit {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
     this.destory$.next(true);
   }
 
