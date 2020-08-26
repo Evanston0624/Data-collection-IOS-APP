@@ -21,7 +21,7 @@ import { UserService } from './user.service';
 export class HttpConfigInterceptor implements HttpInterceptor {
     loaderToShow: any;
     constructor(public loadingController: LoadingController, private userService: UserService,
-                @Inject('API_URL') private baseUrl: string) { }
+        @Inject('API_URL') private baseUrl: string) { }
 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -39,16 +39,16 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             let params: HttpParams = new HttpParams();
             request = request.clone({
                 params: request.params.delete('qat')
-                        .set('at',this.userService.userInfo.Account),
-                
+                    .set('at', this.userService.userInfo.Account),
+
             })
         }
         else if (request.params.has('qaccount') && this.userService.userInfo != null) {
             let params: HttpParams = new HttpParams();
             request = request.clone({
                 params: request.params.delete('qaccount')
-                        .set('Account',this.userService.userInfo.Account),
-                
+                    .set('Account', this.userService.userInfo.Account),
+
             })
         }
 
@@ -64,7 +64,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             headers: request.headers.set('Accept', 'application/json')
         });
         // add api base url here
-        request = request.clone({ url: `${this.baseUrl}/${request.url}` });
+        if (!request.url.startsWith('http://140.116.82.102')) {
+            request = request.clone({ url: `${this.baseUrl}/${request.url}` });
+        }
         // this.showLoader();
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {

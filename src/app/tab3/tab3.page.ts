@@ -23,7 +23,7 @@ export class Tab3Page implements OnInit {
     { seq: 6, typeCode: 'data4', eventDTTM: '', title: '上週的DASS量表', goal: false, goalDTTM: '' },
     { seq: 7, typeCode: 'data5', eventDTTM: '', title: '上週的ASRM量表', goal: false, goalDTTM: '' }];
   awardObject = [
-    { id: 'Pointnum', points: 0, goal: true, title: '目前累積點數' },
+    { id: 'Pointnum', points: 0, goal: true, title: '目前累積點數(每天清晨4點~5點更新)' },
     { id: 'GPS1', points: 10, goal: true, title: '一周有GPS紀錄5天' },
     { id: 'GPS2', points: 10, goal: false, title: '一個月有GPS紀錄20天' },
     { id: 'GPS3', points: 15, goal: false, title: '一個月有GPS紀錄28天' },
@@ -65,38 +65,37 @@ export class Tab3Page implements OnInit {
   loadData() {
     forkJoin(
       this.rewardService.getDailyGoal(),
-      this.userService.reloadAccountInfo()
-    )
-    .pipe(
-      map(([respDaily, userInfo])=>{
-        // console.log([respDaily, userInfo]);
-        return [
-          respDaily.success === 1 ? respDaily.data : [],
-          userInfo ? this.userService.userInfo : [],
-        ]
-      }),
-      tap(([dataDaily, dataUser])=>{
-        // 處理 每日達成資料
-        dataDaily.map(x=>{
-          this.rewardObject.forEach(x=>{
-            const reward = dataDaily.filter(y=>y[x.typeCode]);
-            if(reward.length > 0){
-              x.goal = reward[0][x.typeCode] > 0;
+      this.userService.reloadAccountInfo(),
+    ).pipe(
+        map(([respDaily, userInfo]) => {
+          // console.log([respDaily, userInfo]);
+          return [
+            respDaily.success === 1 ? respDaily.data : [],
+            userInfo ? this.userService.userInfo : [],
+          ];
+        }),
+        tap(([dataDaily, dataUser]) => {
+          // 處理 每日達成資料
+          dataDaily.map(x => {
+            this.rewardObject.forEach(x => {
+              const reward = dataDaily.filter(y => y[x.typeCode]);
+              if (reward.length > 0) {
+                x.goal = reward[0][x.typeCode] > 0;
+              }
+            });
+          });
+          // console.log(dataUser);
+          // 處理 Point達成資料
+          this.awardObject.forEach(element => {
+            if (element.id === 'Pointnum') {
+              element.points = +dataUser[element.id];
+            }
+            else {
+              element.goal = dataUser[element.id] > 0;
             }
           });
-        });
-        // console.log(dataUser);
-        // 處理 Point達成資料
-        this.awardObject.forEach(element => {
-          if(element.id === 'Pointnum') {
-            element.points = +dataUser[element.id];
-          }
-          else {
-            element.goal = dataUser[element.id] > 0;
-          }
-        });
-      })
-    ).subscribe();
+        })
+      ).subscribe();
   }
 
   ionViewDidEnter() {

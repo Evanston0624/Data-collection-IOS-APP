@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { RewardService } from '../services/reward.service';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { AlertService } from '../services/alert.service';
+import { AppInfoService } from '../services/appInfo.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-points-redeem',
   templateUrl: './points-redeem.page.html',
   styleUrls: ['./points-redeem.page.scss'],
 })
-export class PointsRedeemPage implements OnInit {
+export class PointsRedeemPage implements OnInit, OnDestroy {
+  destory$ = new Subject<boolean>();
   points = 0;
   title = 'aaa';
   buttonsOption = [
@@ -23,8 +26,12 @@ export class PointsRedeemPage implements OnInit {
       }
     }
   ];
+  exchangeMessage = '';
   constructor(private userService: UserService, private rewardService: RewardService,
-              private alertCtrl: AlertController, private alertService: AlertService) { }
+              private alertService: AlertService, private appInfoService: AppInfoService) { }
+  ngOnDestroy(): void {
+    this.destory$.next(true);
+  }
 
   ngOnInit() {
     this.reloadPoint();
@@ -35,10 +42,17 @@ export class PointsRedeemPage implements OnInit {
    */
   reloadPoint() {
     this.userService.reloadAccountInfo().subscribe({
-      next: () =>{
+      next: () => {
         this.points = +this.userService.userInfo.Pointnum;
       }
     });
+    this.appInfoService.appInfo
+      .pipe(takeUntil(this.destory$))
+      .subscribe({
+        next: (appInfo) => {
+          this.exchangeMessage = appInfo.ExchangeMessage;
+        }
+      });
   }
 
   /**
@@ -48,17 +62,17 @@ export class PointsRedeemPage implements OnInit {
     // this.rewardService.exchangeHistory(this.userService.userInfo.Account)
     this.rewardService.exchangeHistory()
       .pipe(
-        map((response:any)=>{
+        map((response: any) => {
           return response.success === 1 ? response.data : [];
         }),
-        map((data)=>{
-          return data.map(x=> `[${x.Datetime}] 兌換${x.wrile}張`).join('<br/>');
+        map((data) => {
+          return data.map(x => `[${x.Datetime}] 兌換${x.wrile}張`).join('<br/>');
         })
       )
       .subscribe({
         next: (data) => {
           console.log(data);
-          if(data.length > 0) {
+          if (data.length > 0) {
             this.alertService.presentAlert(data, undefined, '歷次兌換資料');
           }
           else {
@@ -72,7 +86,7 @@ export class PointsRedeemPage implements OnInit {
    * 兌換
    * @param exchangeType 兌換類別 0: 1張, 1: 全部
    */
-  doPointExchange(exchangeType){
+  doPointExchange(exchangeType) {
     const pointExchangeNum = exchangeType === 0 ? 1 : Math.trunc(this.points / 100);
     const params = {
       qat: '',
@@ -83,7 +97,7 @@ export class PointsRedeemPage implements OnInit {
     console.log(params);
     this.rewardService.setPointsExchange(params).subscribe({
       next: (res) => {
-        if(res >= 0) {
+        if (res >= 0) {
           // 兌換成功 
           this.points = res;
           this.alertService.presentAlert(`兌換成功!!(共${pointExchangeNum}張)`, this.buttonsOption);
@@ -105,12 +119,12 @@ export class PointsRedeemPage implements OnInit {
     const headerText = exchangeType === 0 ? `兌換1張` : '兌換全部'
     //const exchangeMessage = 
     const message = !doExchange ? '請交由兌換人員進行兌換' : `確定要兌換${headerText}(請由兌換人員操作)`;
-    this.alertService.presentConfirm(message,[
+    this.alertService.presentConfirm(message, [
       {
         text: doExchange ? '兌換' : '確認兌換',
         cssClass: 'primary',
         handler: () => {
-          if(doExchange) {
+          if (doExchange) {
             this.doPointExchange(exchangeType);
             console.log('do exchange');
           }
@@ -119,7 +133,7 @@ export class PointsRedeemPage implements OnInit {
             this.pointsExchange(exchangeType, true);
           }
         }
-      },{
+      }, {
         text: '取消'
       }
     ], headerText);

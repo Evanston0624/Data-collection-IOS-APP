@@ -4,6 +4,7 @@ import { Platform, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CustomLoaderService } from './services/loader-operator.service';
+import { AppInfoService } from './services/appInfo.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private appInfoService: AppInfoService
   ) {
     this.initializeApp();
   }
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit {
           .then(resp => console.log('dismiss success', resp));
       }
     });
+    this.appInfoService.getAppInfo().subscribe();
   }
 
   initializeApp() {
@@ -65,10 +68,4 @@ export class AppComponent implements OnInit {
     // this.loadingCtrl.dismiss();
     // 
   }
-
-  ngAfterViewInit() {
-
-  }
-
-
 }

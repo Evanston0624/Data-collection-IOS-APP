@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ResponseInfoModel } from '../models/common.model';
 import { CustomLoaderService } from './loader-operator.service';
 
@@ -13,6 +13,7 @@ import { CustomLoaderService } from './loader-operator.service';
   providedIn: 'root'
 })
 export class RewardService {
+  exchangeMessage = '';
 
   constructor(private http: HttpClient, private loaderService: CustomLoaderService) { }
 
@@ -25,7 +26,7 @@ export class RewardService {
       params: {
         qat: ''
       }
-    }
+    };
     return this.loaderService.getLoderService(this.http.get('PointExchangeHistory.php', options));
   }
   /**
@@ -38,7 +39,7 @@ export class RewardService {
       params: {
         qat: ''
       }
-    }
+    };
     return this.loaderService.getLoderService(this.http.get('DayWork.php', options));
   }
 
@@ -52,25 +53,25 @@ export class RewardService {
       params: {
         qat: ''
       }
-    }
+    };
     return this.loaderService.getLoderService(this.http.get('PointCal.php', options));
   }
   /**
    * http://140.116.82.102:8080/apptext/PointExchangeUpd.php?at=&Pointnum=&time=&Ptn=
    * 	(at)account= 0-9^A-Z^a-z^_
 	 *  Pointnum= 0-9
-	 *  time= yyyy-MM-dd+hh:mm;ss
-	 *  (Ptn)Point exchange num= 0-9
+	 *  time = yyyy-MM-dd+hh:mm;ss
+	 *  (Ptn)Point exchange num = 0-9
 
    * 點數兌換
    * @param params 點數兌換資料
    */
   setPointsExchange(params) {
     const options = {
-      params: params
-    }
+      params
+    };
     return this.loaderService.getLoderService(this.http.get('PointExchangeUpd.php', options).pipe(
-      map((response:ResponseInfoModel)=>{
+      map((response: ResponseInfoModel) => {
         console.log(response);
         return response.success === 1 ? response.data.Pointnum : -1;
       })));
