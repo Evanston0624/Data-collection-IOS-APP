@@ -21,7 +21,7 @@ import { UserService } from './user.service';
 export class HttpConfigInterceptor implements HttpInterceptor {
     loaderToShow: any;
     constructor(public loadingController: LoadingController, private userService: UserService,
-        @Inject('API_URL') private baseUrl: string) { }
+                @Inject('API_URL') private baseUrl: string) { }
 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -36,20 +36,20 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         // }
 
         if (request.params.has('qat') && this.userService.userInfo != null) {
-            let params: HttpParams = new HttpParams();
+            // let params: HttpParams = new HttpParams();
             request = request.clone({
                 params: request.params.delete('qat')
                     .set('at', this.userService.userInfo.Account),
 
-            })
+            });
         }
         else if (request.params.has('qaccount') && this.userService.userInfo != null) {
-            let params: HttpParams = new HttpParams();
+            // let params: HttpParams = new HttpParams();
             request = request.clone({
                 params: request.params.delete('qaccount')
                     .set('Account', this.userService.userInfo.Account),
 
-            })
+            });
         }
 
         // if (!request.headers.has('Content-Type')) {
@@ -99,6 +99,4 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     // hideLoader() {
     //     this.loadingController.dismiss();
     // }
-
-
 }

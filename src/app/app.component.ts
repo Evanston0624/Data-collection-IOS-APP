@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   async presentLoading(message?: string) {
-    console.log(message);
+    // console.log(message);
     const showMessage = message === '' ? '資料讀取中...請稍候' : message;
     const loading = await this.loadingCtrl.create({
       message: showMessage
