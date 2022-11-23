@@ -61,9 +61,9 @@ export class UserService {
   //   return this._locationList;
   // }
   constructor(private http: HttpClient,
-    private loaderService: CustomLoaderService,
-    private locationService: LocationsServiceProvider,
-    private nativeStorage: NativeStorage) { }
+              private loaderService: CustomLoaderService,
+              private locationService: LocationsServiceProvider,
+              private nativeStorage: NativeStorage) { }
   /**
    * 驗證是否登入
    */
@@ -71,7 +71,7 @@ export class UserService {
     const promise = new Promise(
       (resolve, rejct) => {
         setTimeout(() => {
-          resolve(this.isLogIn)
+          resolve(this.isLogIn);
         }, 200);
       }
     );
@@ -109,7 +109,7 @@ export class UserService {
   newAccount({ name, account, password, mobile, email }) {
     const options = {
       params: { name: name, at: account, pw: password, mobile: mobile, email: email }
-    }
+    };
     return this.loaderService.getLoderService(this.http.post(`RegistUser.php`, options));
   }
 

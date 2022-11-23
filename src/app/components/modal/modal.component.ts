@@ -71,7 +71,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
         this.datePicker.value = `${res.year.text}-${res.month.text}-${res.day.text}`;
       }
     }]
-  }
+  };
   /**
    * 時間選單 Option
    */
@@ -185,24 +185,24 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
    * 依照傳入的資料(ResponseInfoModel)找出今天的最後一筆
    * @param res ResponseInfoModel
    */
-  private findLatestRecord = (res: ResponseInfoModel) =>{
+  private findLatestRecord = (res: ResponseInfoModel) => {
     // 當天4點以前算前一天
-    const todayDateTime = moment().hours() >= 4 ? moment().format('YYYY-MM-DD 04:00:00') 
-                                                : moment().subtract(1,'days').format('YYYY-MM-DD 04:00:00');
-    if(res.success === 1) {
-      const todayRecords = res.data.filter(x=>x.Datetime >= todayDateTime);
-      if(todayRecords.length > 0) {
-        return todayRecords.reduce((x,y)=> x.Datetime > y.Datetime ? x : y);
+    const todayDateTime = moment().hours() >= 4 ? moment().format('YYYY-MM-DD 04:00:00')
+      : moment().subtract(1, 'days').format('YYYY-MM-DD 04:00:00');
+    if (res.success === 1) {
+      const todayRecords = res.data.filter(x => x.Datetime >= todayDateTime);
+      if (todayRecords.length > 0) {
+        return todayRecords.reduce((x, y) => x.Datetime > y.Datetime ? x : y);
       }
     }
     return undefined;
-  };
+  }
   //
   message = '';
   constructor(public modalController: ModalController, private alertService: AlertService,
     private dailyRecordService: DailyRecordService, private chartService: ChartService,
     private loaderService: CustomLoaderService,
-    private mediaCapture: MediaCapture, private videoEditor: VideoEditor, 
+    private mediaCapture: MediaCapture, private videoEditor: VideoEditor,
     private file: File, private fileTransfer: FileTransfer, @Inject('API_URL') private baseUrl: string) { }
   ngAfterViewInit(): void {
     if (this.emotionType === 0) {
@@ -220,7 +220,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
         ))
         .pipe(
           //tap(([respType1, respType2, respType3]) => console.log(respType1, respType2, respType3)),
-          tap(([respType1, respType2, respType3])=>{
+          tap(([respType1, respType2, respType3]) => {
             this.dailyWorkExists = {
               dataType4: respType1,
               dataType8: respType2,
@@ -257,7 +257,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  async dismiss(reloadData=false, message?) {
+  async dismiss(reloadData = false, message?) {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     // const modalData = this.emotionType === 0 ? this.eventObject : this.eventObject;
@@ -314,8 +314,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       else if (this.dataType === 1) { // 聲音
-        if(this.eventObject.audio.trim().length === 0)
-        {
+        if (this.eventObject.audio.trim().length === 0) {
           errorMessage = '還沒有錄音哦!!';
         }
       }
@@ -323,8 +322,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
       //   // 情緒
       // }
       else if (this.dataType === 3) { // 影片
-        if(this.eventObject.video.trim().length === 0)
-        {
+        if (this.eventObject.video.trim().length === 0) {
           errorMessage = '還沒有錄影哦!!';
         }
       }
@@ -332,7 +330,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.datePicker.value === undefined || this.timePicker.value === undefined) {
           errorMessage = '日期時間不可空白!!';
         }
-        else{
+        else {
           this.newData.content = `${this.datePicker.value}+${this.timePicker.value}`;
         }
       }
@@ -340,39 +338,39 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
     // 如有錯誤顯示訊息後離開
     if (errorMessage.trim().length > 0) {
       this.alertService.presentAlert(errorMessage);
-      return; 
+      return;
     }
-    // 
-    const emojiObject = this.eventObject.emoji.map(x => { return { [x.id]: x.value }; }).reduce((accum, val) => {
+    //
+    const emojiObject = this.eventObject.emoji.map(x => ({[x.id]: x.value})).reduce((accum, val) => {
       Object.assign(accum, val);
       return accum;
-    }, {})
+    }, {});
     console.log({ ...this.newData, ...emojiObject });
     if (this.dailyWorkExists[`dataType${this.newData.type}`] !== undefined) {
-      let confirmMessage = undefined;
+      let confirmMessage;// = undefined;
       // 當天已有資料存在
-      if(this.newData.type === '4') {
+      if (this.newData.type === '4') {
         confirmMessage = `今天己填寫過情緒資料 <br>
                           情緒分數為: ${this.dailyWorkExists.dataType4.write}<br>
                           要修改舊的或再傳一次呢?`;
       }
-      else if(this.newData.type === '5') {
+      else if (this.newData.type === '5') {
         confirmMessage = `今天己填寫過起床時間 <br>
                           起床時間為: ${this.dailyWorkExists.dataType5.write}<br>
                           要修改舊的或再傳一次呢?`;
       }
-      else if(this.newData.type === '8') {
+      else if (this.newData.type === '8') {
         confirmMessage = `今天己填寫過睡眠時間 <br>
                           睡眠時間時間為: ${this.dailyWorkExists.dataType8.write}<br>
                           要修改舊的或再傳一次呢?`;
       }
-      if(!!confirmMessage){
+      if (!!confirmMessage) {
         this.alertService.presentConfirm(confirmMessage, this.confirmButtonsOption);
       }
     }
     else {
       // 
-      if(this.newData.type === '1' || this.newData.type === '3'){
+      if (this.newData.type === '1' || this.newData.type === '3') {
         this.doUploadFileAndSubmitData();
       }
       else {
@@ -386,11 +384,11 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   doSubmitData(insertData = true) {
     // const reloadData = this.newData.type === '0' || this.newData.type === '1' || this.newData.type === '3';
-    if(insertData){
+    if (insertData) {
       this.dailyRecordService.setRecord(this.newData).subscribe({
         next: (res) => {
           if (res) {
-            this.dismiss(true,'儲存成功');
+            this.dismiss(true, '儲存成功');
           }
           else {
             this.alertService.presentAlert('儲存失敗');
@@ -407,7 +405,7 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dailyRecordService.upadteRecord(this.newData).subscribe({
         next: (res) => {
           if (res) {
-            this.dismiss(false,'更新成功');
+            this.dismiss(false, '更新成功');
           }
           else {
             this.alertService.presentAlert('更新失敗');
@@ -434,46 +432,46 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     // 取得上傳的媒體檔案名稱
     this.newData.content = fileName.substr(fileName.lastIndexOf('/') + 1);
-    
+
     // 建立檔案上傳的Option
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
-    let options: FileUploadOptions = {
-       fileKey: 'uploadedfile',
-       fileName: this.newData.content,
-       headers: {}
-    }
+    const options: FileUploadOptions = {
+      fileKey: 'uploadedfile',
+      fileName: this.newData.content,
+      headers: {}
+    };
     // 上傳檔案並switchMap setRecord
     this.message = `start upload media ${fileName}`;
     this.loaderService.getLoderService(
-    from(fileTransfer.upload(`file://${fileName}`,`${this.baseUrl}/${apiName}`, options))
-    .pipe(
-      map((res: FileUploadResult)=>JSON.parse(res.response).success === 1),
-      tap(mediaUploadResult=>{
-        if(!mediaUploadResult){
-          this.alertService.presentAlert('上傳影像失敗', undefined, '存檔作業')
+      from(fileTransfer.upload(`file://${fileName}`, `${this.baseUrl}/${apiName}`, options))
+        .pipe(
+          map((res: FileUploadResult) => JSON.parse(res.response).success === 1),
+          tap(mediaUploadResult => {
+            if (!mediaUploadResult) {
+              this.alertService.presentAlert('上傳影像失敗', undefined, '存檔作業')
+            }
+          }),
+          filter(mediaUploadResult => mediaUploadResult),
+          switchMap((mediaUploadResult) => {
+            return this.dailyRecordService.setRecord(this.newData)
+          })
+        ), '影音檔及資料上傳中...請稍候')
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            // this.alertService.presentAlert('存檔成功');
+            this.dismiss(true, '更新成功');
+          }
+          else {
+            this.alertService.presentAlert('存檔失敗!!!');
+          }
         }
-      }),
-      filter(mediaUploadResult=>mediaUploadResult),
-      switchMap((mediaUploadResult)=>{
-        return this.dailyRecordService.setRecord(this.newData)
-      })
-    ), '影音檔及資料上傳中...請稍候')
-    .subscribe({
-      next: (res) => {
-        if(res) {
-          // this.alertService.presentAlert('存檔成功');
-          this.dismiss(true,'更新成功');
-        }
-        else {
-          this.alertService.presentAlert('存檔失敗!!!');
-        }
-      }
-    });
+      });
   }
 
   /**
    * 睡覺及起床時間切換
-   * @param $event 
+   * @param $event 傳入的事件物件
    */
   segmentChanged($event) {
     this.dataType = +$event.detail.value;
@@ -490,56 +488,56 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
    * 錄影及轉檔
    */
   recordVideo() {
-    let options: CaptureVideoOptions = { limit: 1, quality: 0 };
+    const options: CaptureVideoOptions = { limit: 1, quality: 0 };
     from(this.mediaCapture.captureVideo(options))
-    .pipe(
-      filter((data: MediaFile[])=>data.length > 0),
-      map((data: MediaFile[])=>data[0].fullPath),
-      tap((fullPath)=>{ this.message = `start trans video ${fullPath}`; }),
-      switchMap((fullPath)=>{
-        const transCodeOption = {
-          fileUri: fullPath,
-          outputFileName: moment().format('YYYYMMDD-HH-mm-ss'),
-          outputFileType: this.videoEditor.OutputFileType.MPEG4
-        };
-        return this.loaderService.getLoderService(from(this.videoEditor.transcodeVideo(transCodeOption)),'影像處理中...請稍候!!')
-      })
-    ).subscribe({
-      next: (fileUri) => {
-        this.message = `trans video success ${fileUri}`;
-        // 取得錄好且轉好檔的影像名稱
-        this.eventObject.video = fileUri;
-      },
-      error: (error) => {
-        if(error.message !== undefined){
-          this.alertService.presentAlert(error.message,undefined, '錄影錯誤');
+      .pipe(
+        filter((data: MediaFile[]) => data.length > 0),
+        map((data: MediaFile[]) => data[0].fullPath),
+        tap((fullPath) => { this.message = `start trans video ${fullPath}`; }),
+        switchMap((fullPath) => {
+          const transCodeOption = {
+            fileUri: fullPath,
+            outputFileName: moment().format('YYYYMMDD-HH-mm-ss'),
+            outputFileType: this.videoEditor.OutputFileType.MPEG4
+          };
+          return this.loaderService.getLoderService(from(this.videoEditor.transcodeVideo(transCodeOption)), '影像處理中...請稍候!!')
+        })
+      ).subscribe({
+        next: (fileUri) => {
+          this.message = `trans video success ${fileUri}`;
+          // 取得錄好且轉好檔的影像名稱
+          this.eventObject.video = fileUri;
+        },
+        error: (error) => {
+          if (error.message !== undefined) {
+            this.alertService.presentAlert(error.message, undefined, '錄影錯誤');
+          }
         }
-      }
-    });
+      });
   }
 
   /**
    * 錄音並修改檔名
    */
   recordAudio() {
-    let options: CaptureAudioOptions = { limit: 1 };
+    const options: CaptureAudioOptions = { limit: 1 };
     from(this.mediaCapture.captureAudio(options))
-    .pipe(
-      filter((data: MediaFile[])=>data.length > 0),
-      map((data: MediaFile[])=>data[0].fullPath),
-      switchMap((fileUri)=>{
-        return this.copyFileToLocalDir(fileUri)
-      })
-    ).subscribe({
-      next: (fileUri) => {
-        // 取得錄好且轉好檔的聲音名稱
-        this.eventObject.audio = fileUri;
-      },
-      error: (error)=>{
-        console.log(error);
-        this.alertService.presentAlert(`取得錄音檔失敗:${error}`)
-      }
-    });
+      .pipe(
+        filter((data: MediaFile[]) => data.length > 0),
+        map((data: MediaFile[]) => data[0].fullPath),
+        switchMap((fileUri) => {
+          return this.copyFileToLocalDir(fileUri);
+        })
+      ).subscribe({
+        next: (fileUri) => {
+          // 取得錄好且轉好檔的聲音名稱
+          this.eventObject.audio = fileUri;
+        },
+        error: (error) => {
+          console.log(error);
+          this.alertService.presentAlert(`取得錄音檔失敗:${error}`)
+        }
+      });
   }
   /**
    * 修改檔名為 YYYYMMDD-HH-mm-ss
@@ -556,9 +554,9 @@ export class ModalComponent implements OnInit, AfterViewInit, OnDestroy {
     const name = myPath.substr(myPath.lastIndexOf('/') + 1);
     const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
     // const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
-    console.log(copyFrom,  name, copyFrom, newName);
+    console.log(copyFrom, name, copyFrom, newName);
     return from(this.file.moveFile(copyFrom, name, copyFrom, newName)).pipe(
-      map((success)=>{
+      map((success) => {
         return `${copyFrom}/${newName}`;
       }));
   }

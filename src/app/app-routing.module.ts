@@ -12,10 +12,11 @@ const routes: Routes = [
   }, {
     path: 'reg',
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
-  }, {
-    path: 'redeem', canLoad: [ AuthGuardService ],
-    loadChildren: () => import('./points-redeem/points-redeem.module').then( m => m.PointsRedeemPageModule)
   }
+  // , {
+  //   path: 'redeem', canLoad: [ AuthGuardService ],
+  //   loadChildren: () => import('./points-redeem/points-redeem.module').then( m => m.PointsRedeemPageModule)
+  // }
 ];
 @NgModule({
   imports: [

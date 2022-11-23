@@ -8,7 +8,8 @@
 
 <ion-content [fullscreen]="true" >
   <ion-card *ngIf="false">
-    <ion-card-content  (click)="showGoogleForm('DASS')">
+    <!-- (click)="showGoogleForm('DASS')" -->
+    <ion-card-content  >
       <ion-item lines="none" class="ion-text-center">
         <ion-label class="ion-text-wrap">
           <ion-text color="primary">
@@ -18,8 +19,9 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
+  <!--  (click)="showGoogleForm('ASRM')" -->
   <ion-card *ngIf="false">
-    <ion-card-content (click)="showGoogleForm('ASRM')">
+    <ion-card-content>
       <ion-item lines="none" class="ion-text-center">
         <ion-label class="ion-text-wrap" >
           <ion-text color="primary">
@@ -29,7 +31,7 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-card>
+  <ion-card *ngIf="false">
     <ion-card-content (click)="showPointRedeem()">
       <ion-item lines="none" class="ion-text-center" >
         <ion-label class="ion-text-wrap">

@@ -93,7 +93,7 @@
         <splash height="2436" src="resources/ios/splash/Default-2436h.png" width="1125" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-            <string>需要您的同意使用相機</string>
+            <string>需要您的同意使用相機，用來錄下您的影像及聲音，完成後上傳您的錄影資訊</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
             <string>需要您的同意使用相簿</string>
@@ -102,13 +102,13 @@
             <string>需要您的同意使用相簿</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
-            <string>需要您的同意使用麥克風</string>
+            <string>需要您的同意使用麥克風，用來錄下您的聲音，完成後上傳您的錄音資訊</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-            <string>需要您的同意使用定位資訊</string>
+            <string>需要您的同意使用定位資訊取得您的位置資訊</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysUsageDescription">
-            <string>需要您的同意使用定位資訊</string>
+            <string>需要您的同意使用定位資訊取得您的位置資訊</string>
         </edit-config>
         <preference name="WKWebViewOnly" value="true" />
         <feature name="CDVWKWebViewEngine">

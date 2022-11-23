@@ -20,9 +20,9 @@ export class RegistrationPage implements OnInit {
   @ViewChild('inputAccount', { static: true }) inputAccount: IonInput | any;
   // checkingAccount = false;
   constructor(private route: Router, private userService: UserService,
-    private fb: FormBuilder, private alertCtrl: AlertController,
-    private router: Router,
-    private loaderService: CustomLoaderService) {
+              private fb: FormBuilder, private alertCtrl: AlertController,
+              private router: Router,
+              private loaderService: CustomLoaderService) {
 
   }
 
@@ -42,12 +42,12 @@ export class RegistrationPage implements OnInit {
       ],
       email: [
         '',
-        [Validators.required, Validators.minLength(5), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]
       ],
       phone: [
         '',
-        [Validators.required, //Validators.minLength(4),Validators.maxLength(14), 
-         Validators.pattern("^09+[0-9]{8}$")]
+        [Validators.required, // Validators.minLength(4),Validators.maxLength(14), 
+         Validators.pattern('^09+[0-9]{8}$')]
       ],
       password: [
         '',
@@ -56,7 +56,7 @@ export class RegistrationPage implements OnInit {
       ],
       password2: [
         '',
-        [Validators.required, //Validators.minLength(4), Validators.maxLength(13),
+        [Validators.required, // Validators.minLength(4), Validators.maxLength(13),
         (control) => this.validatePasswords(control, 'password2')]
       ],
     });
@@ -73,11 +73,11 @@ export class RegistrationPage implements OnInit {
         next: (data) => {
           if (data) {
             if (this.account.hasError('userExist')) {
-              this.account.setErrors(null)
+              this.account.setErrors(null);
             }
           }
           else {
-            this.account.setErrors({ userExist: true })
+            this.account.setErrors({ userExist: true });
           }
           this.inputAccount.setFocus();
         }
@@ -96,8 +96,7 @@ export class RegistrationPage implements OnInit {
     }
     */
   }
-  //pipeFromArray<T = any, R = any>(fns: Array<UnaryFunction<any, any>>): UnaryFunction<T, R>;
-  
+  // pipeFromArray<T = any, R = any>(fns: Array<UnaryFunction<any, any>>): UnaryFunction<T, R>;
 
   get password1(): AbstractControl {
     return this.registrationForm.get('password');
@@ -146,7 +145,7 @@ export class RegistrationPage implements OnInit {
       }
       return null;
     } else {
-      return { 'passwordMismatch': { value: 'The provided passwords do not match' } };
+      return { passwordMismatch: { value: 'The provided passwords do not match' } };
     }
   }
 

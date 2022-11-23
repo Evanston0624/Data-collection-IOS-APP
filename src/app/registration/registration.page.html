@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!-- <ion-back-button></ion-back-button> -->
+
     </ion-buttons>
     <ion-title>註冊新帳號</ion-title>
   </ion-toolbar>
@@ -14,16 +14,9 @@
         <ion-grid>
           <ion-row color="primary" justify-content-center>
             <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-              <!-- <div text-center>
-                <h3>Create your account!</h3>
-              </div> -->
+
               <div padding>
-                <!-- 
-                  <ion-item>
-                    <ion-label position="floating">帳號</ion-label>
-                    <ion-input name="account" type="text" formControlName="account"></ion-input>
-                  </ion-item>
-                -->
+
                 <ion-item >
                   <ion-label [class.invalidLabel]="!registrationForm.controls.name.valid" position="floating">
                     <div>姓名</div></ion-label>
@@ -87,7 +80,7 @@
                     <div *ngIf="registrationForm.controls['password'].errors.minlength" >
                       最少要{{registrationForm.controls['password']?.errors?.minlength.requiredLength}}個字
                     </div>
-                    <!-- <div *ngIf="registrationForm.controls['account']?.errors?.userExist" >帳號已存在!!</div> -->
+
                     <div *ngIf="registrationForm.controls['password']?.errors?.maxlength">
                       最多只能{{registrationForm.controls['password']?.errors?.maxlength.requiredLength}}個字
                     </div>
@@ -103,12 +96,7 @@
                     <div *ngIf="registrationForm.controls['password2'].errors.passwordMismatch"  >
                       密碼不一致
                     </div>
-                    <!-- <div *ngIf="registrationForm.controls['password2'].errors.minlength" >
-                      最少要{{registrationForm.controls['password2']?.errors?.minlength.requiredLength}}個字
-                    </div>
-                    <div *ngIf="registrationForm.controls['password2']?.errors?.maxlength">
-                      最多只能{{registrationForm.controls['password2']?.errors?.maxlength.requiredLength}}個字
-                    </div> -->
+
                   </div>
                 </ion-item>
               </div>

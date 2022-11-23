@@ -254,7 +254,7 @@ export class LocationsServiceProvider {
      * @param backoffMs add delay ms each retry
      */
     delayRetry(delayMs: number, maxRetry = DEFAULT_MAX_RETRIES, backoffMs = DEFAULT_BACKOFF) {
-        let retries = delayMs;
+        let retries = maxRetry;
         return (src: Observable<any>) => src.pipe(
             retryWhen((error: Observable<any>) => error.pipe(
                 mergeMap(error => {
