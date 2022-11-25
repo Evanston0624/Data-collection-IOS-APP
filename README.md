@@ -4,9 +4,11 @@
 - APP store : https://apps.apple.com/tw/app/tw-edu-ncku-mood-sensor/id1598342147
 
 # Exhibit
-- ![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/colection.png)
-- ![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/feedback.png)
-- ![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/point.png)
+![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/colection.png)
+
+![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/feedback.png)
+
+![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/point.png)
 
 # Introduction
 ## Lifestyle and mood record APP
