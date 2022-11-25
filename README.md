@@ -5,7 +5,10 @@
 
 # Exhibit
 ![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/colection.png)
+![avatar](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/colection.png)
+![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/feedback.png)
 
+![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/point.png)
 
 # Introduction
 ## Lifestyle and mood record APP
