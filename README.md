@@ -1,7 +1,6 @@
 # Data-collection-Android-APP 
 - The training and testing data are not included here.
 - If you have any questions about the code, please email: g192e1654k@gmail.com
-- APP store : https://apps.apple.com/tw/app/tw-edu-ncku-mood-sensor/id1598342147
 
 # Exhibit
 ![image](https://github.com/Evanston0624/Data-collection-IOS-APP/tree/main/result/colection.png)
